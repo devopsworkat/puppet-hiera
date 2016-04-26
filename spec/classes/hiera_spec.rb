@@ -4,7 +4,10 @@ describe 'hiera' do
   if Puppet.version =~ /(Puppet Enterprise 3|^3)/
     context "foss puppet 3" do
       let(:facts) do
-        { :puppetversion => "3.8.5", }
+        {
+          :puppetversion => "3.8.6",
+          :is_pe => false,
+        }
       end
       describe 'default params' do
         it { should compile.with_all_deps }
@@ -22,7 +25,7 @@ describe 'hiera' do
     context "pe puppet 3" do
       let(:facts) do
         {
-          :puppetversion => '3.8.5 (Puppet Enterprise 3.8.0)',
+          :puppetversion => '3.8.6 (Puppet Enterprise 3.8.0)',
           :is_pe         => true,
           :pe_version    => '3.8.0',
         }
@@ -42,7 +45,10 @@ describe 'hiera' do
   elsif Puppet.version =~ /^4/
     context "foss puppet 4" do
       let(:facts) do
-        { :puppetversion => Puppet.version, }
+        {
+          :puppetversion => Puppet.version,
+          :is_pe => false,
+        }
       end
       describe 'default params' do
         it { should compile.with_all_deps }
@@ -61,6 +67,7 @@ describe 'hiera' do
         {
           :puppetversion     => Puppet.version,
           :pe_server_version => '2015.2.1',
+          :is_pe => true,
         }
       end
       describe 'default params' do
